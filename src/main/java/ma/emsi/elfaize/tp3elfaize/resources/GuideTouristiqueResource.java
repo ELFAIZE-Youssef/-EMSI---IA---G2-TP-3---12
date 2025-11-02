@@ -1,11 +1,10 @@
 package ma.emsi.elfaize.tp3elfaize.resources;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import ma.emsi.elfaize.tp3elfaize.llm.InfosTouristiques;
 import ma.emsi.elfaize.tp3elfaize.llm.LlmClient;
 
 @Path("/guide")
@@ -17,6 +16,8 @@ public class GuideTouristiqueResource {
     @GET
     @Path("/lieu/{ville_ou_pays}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String  getLieu(@PathParam("ville_ou_pays") String lieu) {
-        return llm.ask(lieu);   }
+    public Response getLieu(@PathParam("ville_ou_pays") String lieu,
+                            @QueryParam("nb") @DefaultValue("2") int nb) {
+        InfosTouristiques reponse = llm.ask(lieu, nb);
+        return Response.ok(reponse).build();    }
 }

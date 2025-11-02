@@ -15,7 +15,7 @@ public class LlmClient {
 
     private String systemRole;
     private ChatMemory chatMemory;
-    private GuideTouristique  assistant;
+    private GuideTouristique  guideTouristique;
 
     /** Constructeur : initialise le modèle Gemini et le service IA */
     public LlmClient() {
@@ -35,30 +35,19 @@ public class LlmClient {
 
         this.chatMemory = MessageWindowChatMemory.withMaxMessages(10);
 
-        this.assistant = AiServices.builder(GuideTouristique .class)
+        this.guideTouristique = AiServices.builder(GuideTouristique .class)
                 .chatModel(model)
                 .chatMemory(chatMemory)
                 .build();
 
     }
 
-    /**
-     * Définit le rôle système du LLM et réinitialise la mémoire.
-     * @param role rôle système choisi par l’utilisateur.
-     */
-    public void setSystemRole(String role) {
-        this.systemRole = role;
-        chatMemory.clear();
-        if (role != null && !role.isBlank()) {
-            chatMemory.add(SystemMessage.from(role));
-        }
-    }
 
     /**
      * Envoie un prompt (question) au LLM et renvoie la réponse.
      */
-    public String ask(String prompt) {
-        return assistant.chat(prompt);
+    public InfosTouristiques  ask(String villeOuPays, int nb) {
+        return guideTouristique.chat(villeOuPays, nb);
     }
 
 }
