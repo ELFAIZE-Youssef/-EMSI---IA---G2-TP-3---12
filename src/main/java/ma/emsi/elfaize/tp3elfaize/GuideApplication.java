@@ -1,9 +1,9 @@
-    package ma.emsi.elfaize.tp3elfaize;
+package ma.emsi.elfaize.tp3elfaize;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 
 @ApplicationPath("/api")
-public class HelloApplication extends Application {
+public class GuideApplication extends Application {
 
 }

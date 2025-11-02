@@ -1,27 +1,22 @@
 package ma.emsi.elfaize.tp3elfaize.resources;
 
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import ma.emsi.elfaize.tp3elfaize.llm.LlmClient;
 
 @Path("/guide")
 public class GuideTouristiqueResource {
+    @Inject
+    private LlmClient llm;
+
+
     @GET
     @Path("/lieu/{ville_ou_pays}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String[] getLieu(@PathParam("ville_ou_pays") String lieu) {
-        // Pour le moment, on retourne juste la valeur reçue
-        if (lieu.equalsIgnoreCase("Maroc")) {
-            return new String[] {"Marrakech", "Chefchaouen"};
-        } else if (lieu.equalsIgnoreCase("France")) {
-            return new String[] {"Paris", "Nice"};
-        } else if (lieu.equalsIgnoreCase("Espagne")) {
-            return new String[] {"Barcelone", "Madrid"};
-        } else if (lieu.equalsIgnoreCase("Italie")) {
-            return new String[] {"Rome", "Venise"};
-        } else {
-            return new String[] {"Aucun lieu trouvé pour : " + lieu};
-        }    }
+    public String  getLieu(@PathParam("ville_ou_pays") String lieu) {
+        return llm.ask(lieu);   }
 }
